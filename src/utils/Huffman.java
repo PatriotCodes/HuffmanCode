@@ -1,8 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Huffman {
 
@@ -11,47 +9,24 @@ public class Huffman {
     public Huffman() { }
 
     public void Compress(String input) {
-        occurrencesQueue = sortQueue(buildPriorityQueue(input));
+        buildPriorityQueue(input);
         buildHuffmanTree(occurrencesQueue);
     }
 
-    private KeyValue<Key, Integer> buildPriorityQueue(String input) {  // refactor
-        KeyValue<Key, Integer> queue = new KeyValue<>();
+    private void buildPriorityQueue(String input) {  // refactor
         for (int i = 0; i < input.length(); i++) {
-            if (!queue.containsKey(new Key(input.charAt(i)))) {
+            Node tmp = new Node(input.charAt(i),1,null,null);
+            if (!occurrencesQueue.contains(tmp)) {
                 int counter = 0;
                 for (int j = i; j < input.length(); j++) {
                     if (input.charAt(j) == input.charAt(i)) {
                         counter++;
                     }
                 }
-                queue.put(new Key(input.charAt(i)),counter);
+                tmp.setFreq(counter);
+                insertToQueue(tmp);
             }
         }
-        return queue;
-    }
-
-    private LinkedList<Node> sortQueue(KeyValue<Key, Integer> inputMap) {
-        LinkedList<Node> sortedQueue = new LinkedList<>();
-        while (!inputMap.isEmpty()) {
-            int minIndex = foundMin(inputMap);
-            Node node = new Node(inputMap.getEntry(minIndex).getKey().getKey(), inputMap.getEntry(minIndex).getValue(), null, null);
-            sortedQueue.add(node);
-            inputMap.remove(inputMap.getEntry(minIndex).getKey());
-        }
-        return sortedQueue;
-    }
-
-    private int foundMin(KeyValue<Key, Integer> input) {
-        int min = Integer.MAX_VALUE;
-        int index = 0;
-        for (int i = 0; i < input.size(); i++) {
-            if (input.getValue(i) < min) {
-                min = input.getValue(i);
-                index = i;
-            }
-        }
-        return index;
     }
 
     private Node buildHuffmanTree(LinkedList<Node> occurrencesQueue) { // TODO: implement
@@ -73,9 +48,17 @@ public class Huffman {
     }
 
     private void insertToQueue(Node insert) {
+        if (occurrencesQueue.isEmpty()) {
+            occurrencesQueue.add(insert);
+            return;
+        }
         for (int i = 0; i < occurrencesQueue.size(); i++) {
             if (i == occurrencesQueue.size() - 1) {
-                occurrencesQueue.add(i,insert);
+                if (occurrencesQueue.get(i).getFreq() > insert.getFreq()) {
+                    occurrencesQueue.add(i,insert);
+                } else {
+                    occurrencesQueue.add(i + 1,insert);
+                }
                 return;
             }
             if (occurrencesQueue.get(i + 1).getFreq() > insert.getFreq()) {

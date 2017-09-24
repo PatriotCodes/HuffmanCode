@@ -1,8 +1,8 @@
 package utils;
 
-public class Node implements Comparable<Node> {
+public class Node {
     private final Character ch;
-    private final int freq;
+    private int freq;
     private final Node left, right;
 
     Node() {
@@ -23,6 +23,10 @@ public class Node implements Comparable<Node> {
         return freq;
     }
 
+    public void setFreq(int freq) {
+        this.freq = freq;
+    }
+
     // is the node a leaf node?
     private boolean isLeaf() {
         assert ((left == null) && (right == null)) || ((left != null) && (right != null));
@@ -30,7 +34,23 @@ public class Node implements Comparable<Node> {
     }
 
     // compare, based on frequency
-    public int compareTo(Node that) {
-        return this.freq - that.freq;
+    //public int compareTo(Node that) {
+    //    return this.freq - that.freq;
+    //}
+
+    @Override
+    public int hashCode() {
+        return ch.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this.hashCode() == obj.hashCode())
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        return false;
     }
 }

@@ -1,52 +1,36 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Node implements Comparable<Node> {
+    private final Character ch;
+    private final int freq;
+    private final Node left, right;
 
-public class Node<T>{
-    private T data = null;
-    private List<Node> children = new ArrayList<>();
-    private Node parent = null;
-
-    public Node(T data) {
-        this.data = data;
+    Node() {
+        this.ch    = null;
+        this.freq  = 0;
+        this.left  = null;
+        this.right = null;
     }
 
-    public void addChild(Node child) {
-        child.setParent(this);
-        this.children.add(child);
+    Node(Character ch, int freq, Node left, Node right) {
+        this.ch    = ch;
+        this.freq  = freq;
+        this.left  = left;
+        this.right = right;
     }
 
-    public void addChild(T data) {
-        Node<T> newChild = new Node<>(data);
-        newChild.setParent(this);
-        children.add(newChild);
+    public int getFreq() {
+        return freq;
     }
 
-    public void addChildren(List<Node> children) {
-        for(Node t : children) {
-            t.setParent(this);
-        }
-        this.children.addAll(children);
+    // is the node a leaf node?
+    private boolean isLeaf() {
+        assert ((left == null) && (right == null)) || ((left != null) && (right != null));
+        return (left == null) && (right == null);
     }
 
-    public List<Node> getChildren() {
-        return children;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    private void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    public Node getParent() {
-        return parent;
+    // compare, based on frequency
+    public int compareTo(Node that) {
+        return this.freq - that.freq;
     }
 }

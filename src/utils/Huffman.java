@@ -1,11 +1,13 @@
 package utils;
 
+import java.util.List;
+
 public class Huffman {
 
     public Huffman() { }
 
     public void Compress(String input) {
-        SortQueue(BuildPriorityQueue(input));
+        KeyValue<Character, Integer> occurrencesQueue = SortQueue(BuildPriorityQueue(input));
     }
 
     private KeyValue<Key, Integer> BuildPriorityQueue(String input) {
@@ -44,5 +46,9 @@ public class Huffman {
             }
         }
         return index;
+    }
+
+    private List<Node<Character>> BiuldHuffmanTree() { // TODO: implement
+        return null;
     }
 }

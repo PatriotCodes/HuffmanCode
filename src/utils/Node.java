@@ -33,11 +33,6 @@ public class Node {
         return (left == null) && (right == null);
     }
 
-    // compare, based on frequency
-    //public int compareTo(Node that) {
-    //    return this.freq - that.freq;
-    //}
-
     @Override
     public int hashCode() {
         return ch.hashCode();

@@ -5,12 +5,13 @@ import java.util.LinkedList;
 public class Huffman {
 
     private LinkedList<Node> occurrencesQueue = new LinkedList<>();
+    private Node huffmanTree;
 
     public Huffman() { }
 
     public void Compress(String input) {
         buildPriorityQueue(input);
-        buildHuffmanTree(occurrencesQueue);
+        huffmanTree = buildHuffmanTree(occurrencesQueue);
     }
 
     private void buildPriorityQueue(String input) {  // refactor
@@ -29,7 +30,7 @@ public class Huffman {
         }
     }
 
-    private Node buildHuffmanTree(LinkedList<Node> occurrencesQueue) { // TODO: implement
+    private Node buildHuffmanTree(LinkedList<Node> occurrencesQueue) {
         Node huffmanTree = new Node();
         while (!occurrencesQueue.isEmpty()) {
             int freq = occurrencesQueue.get(0).getFreq() + occurrencesQueue.get(1).getFreq();

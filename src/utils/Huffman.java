@@ -5,14 +5,15 @@ import java.util.LinkedList;
 
 public class Huffman {
 
-    private LinkedList<Node> occurrencesQueue = new LinkedList<>();
+    private LinkedList<Node> occurrencesQueue;
 
     public Huffman() { }
 
-    public void Compress(String input) {
+    public LinkedHashMap<Character, String> Compress(String input) {
+        occurrencesQueue = new LinkedList<>();
         buildPriorityQueue(input);
         Node huffmanTree = buildHuffmanTree(occurrencesQueue);
-        getCodes(huffmanTree);
+        return getCodes(huffmanTree);
     }
 
     private void buildPriorityQueue(String input) {  // refactor

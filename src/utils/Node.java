@@ -24,7 +24,6 @@ public class Node {
     public LinkedHashMap<Character, String> recPreOrder(LinkedHashMap<Character, String> result, StringBuilder bits){
         if (this.isLeaf()) {
             result.put(this.ch,bits.toString());
-            bits.deleteCharAt(bits.length() - 1);
         }
         if (left!=null) {
             bits.append(0);
@@ -33,6 +32,9 @@ public class Node {
         if (right!=null) {
             bits.append(1);
             right.recPreOrder(result, bits);
+        }
+        if (bits.length() != 0) {
+            bits.deleteCharAt(bits.length() - 1);
         }
         return result;
     }

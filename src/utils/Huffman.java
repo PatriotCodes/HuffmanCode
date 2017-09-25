@@ -1,17 +1,18 @@
 package utils;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class Huffman {
 
     private LinkedList<Node> occurrencesQueue = new LinkedList<>();
-    private Node huffmanTree;
 
     public Huffman() { }
 
     public void Compress(String input) {
         buildPriorityQueue(input);
-        huffmanTree = buildHuffmanTree(occurrencesQueue);
+        Node huffmanTree = buildHuffmanTree(occurrencesQueue);
+        getCodes(huffmanTree);
     }
 
     private void buildPriorityQueue(String input) {  // refactor
@@ -67,5 +68,12 @@ public class Huffman {
                 return;
             }
         }
+    }
+
+    private LinkedHashMap<Character, String> getCodes(Node huffmanTree) {
+        LinkedHashMap<Character, String> codes = new LinkedHashMap<>();
+        StringBuilder bits = new StringBuilder();
+        huffmanTree.recPreOrder(codes, bits);
+        return codes;
     }
 }

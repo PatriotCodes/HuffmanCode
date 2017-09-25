@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.LinkedHashMap;
+
 public class Node {
     private final Character ch;
     private int freq;
@@ -19,9 +21,23 @@ public class Node {
         this.right = right;
     }
 
-    public int getFreq() {
-        return freq;
+    public LinkedHashMap<Character, String> recPreOrder(LinkedHashMap<Character, String> result, StringBuilder bits){
+        if (this.isLeaf()) {
+            result.put(this.ch,bits.toString());
+            bits.deleteCharAt(bits.length() - 1);
+        }
+        if (left!=null) {
+            bits.append(0);
+            left.recPreOrder(result, bits);
+        }
+        if (right!=null) {
+            bits.append(1);
+            right.recPreOrder(result, bits);
+        }
+        return result;
     }
+
+    public int getFreq() { return freq; }
 
     public void setFreq(int freq) {
         this.freq = freq;
